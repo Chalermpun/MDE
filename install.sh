@@ -1,7 +1,7 @@
 sudo apt-get update && apt-get install sudo -y
 sudo apt-get install git fd-find zsh bat tree ninja-build gettext cmake unzip curl tmux ripgrep python3 python3-pip python3-venv python3-dev python3-setuptools fontconfig sqlite3 libsqlite3-dev ripgrep libboost-all-dev libicu-dev npm pkg-config -y
 curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh -o install_nvm.sh
-git clone https://github.com/neovim/neovim && cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+git clone https://github.com/neovim/neovim && cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install
 curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh -o install_nvm.sh
 bash install_nvm.sh
 source ~/.bashrc
@@ -19,10 +19,6 @@ git clone https://github.com/joshskidmore/zsh-fzf-history-search ${ZSH_CUSTOM:=~
 sed 's/^plugins=(git/plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-fzf-history-search/g' ~/.zshrc >~/zshrc.txt
 mv ~/zshrc.txt ~/.zshrc
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-git clone https://github.com/neovim/neovim
-cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
-make install
 mkdir -p ~/.config
 echo 'alias tmux="tmux -u"' >>~/.zshrc
 mkdir ~/.local/share/fonts
@@ -39,7 +35,7 @@ _fzf_comprun() {
 
   case "$command" in
     cd)           fzf "$@" --preview 'tree -C {} | head -200' ;;
-    nvim)         fzf "$@" --preview 'bat --style=numbers --color=always {}' ;;
+    nvim)         fzf "$@" --preview 'batcat --style=numbers --color=always {}' ;;
     *)            fzf "$@" ;;
   esac
 }
@@ -53,3 +49,5 @@ curl -SsL https://packages.httpie.io/deb/KEY.gpg | sudo gpg --dearmor -o /usr/sh
 sudo echo "deb [arch=amd64 signed-by=/usr/share/keyrings/httpie.gpg] https://packages.httpie.io/deb ./" > /etc/apt/sources.list.d/httpie.list
 sudo apt update
 sudo apt install httpie
+
+

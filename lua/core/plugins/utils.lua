@@ -74,4 +74,14 @@ return { -- Add Hyprland Parser
 			vim.list_extend(opts.items, items)
 		end,
 	},
+	{
+		"eandrju/cellular-automaton.nvim",
+		event = "VeryLazy",
+		lazy = true,
+	},
+
+	{
+		"tamton-aquib/zone.nvim",
+		event = "VeryLazy",
+	},
 }
