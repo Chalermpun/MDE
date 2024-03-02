@@ -313,3 +313,10 @@ map("n", "<leader>zh", "<cmd>CccHighlighterToggle<cr>", { desc = "Color Toggle H
 
 -- Markdown
 map("n", "<leader>pn", '<cmd>:lua require("nabla").popup()<CR>', { desc = "Nabla Popup" })
+map("n", "<leader>os", '<cmd>ObsidianSearch<CR>', { desc = "ObsidianSearch" })
+map("n", "<leader>on", '<cmd>ObsidianNew<CR>', { desc = "ObsidianNew" })
+map("n", "<leader>ow", '<cmd>ObsidianWorkspace<CR>', { desc = "ObsidianWorkspace" })
+map("n", "<leader>oq", '<cmd>ObsidianQuickSwitch<CR>', { desc = "ObsidianQuickSwitch" })
+map("n", "<leader>ot", '<cmd>ObsidianTemplate<CR>', { desc = "ObsidianTemplate" })
+map("n", "<leader>oo", '<cmd>ObsidianOpen<CR>', { desc = "ObsidianOpen" })
+
