@@ -112,17 +112,10 @@ return {
 			-- current markdown file being edited.
 			workspaces = {
 				{
-					name = "personal",
-					path = "~/Notes/personal",
+					name = "Obsidian",
+					path = "~/Obsidian/",
 				},
-				{
-					name = "work",
-					path = "~/Notes/work",
-					-- Optional, override certain settings.
-					overrides = {
-						notes_subdir = "notes",
-					},
-				},
+				{ name = "Note", path = "~/Notes/" },
 			},
 
 			-- Alternatively - and for backwards compatibility - you can set 'dir' to a single path instead of
@@ -266,7 +259,7 @@ return {
 
 			-- Optional, for templates (see below).
 			templates = {
-				subdir = "../templates",
+				subdir = "templates",
 				date_format = "%Y-%m-%d",
 				time_format = "%H:%M",
 				-- A map for custom variables, the key should be the variable and the value a function
@@ -403,6 +396,19 @@ return {
 				end,
 			},
 		},
+	},
+	{
+		"Zeioth/markmap.nvim",
+		build = "yarn global add markmap-cli",
+		cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
+		opts = {
+			html_output = "/tmp/markmap.html", -- (default) Setting a empty string "" here means: [Current buffer path].html
+			hide_toolbar = false, -- (default)
+			grace_period = 3600000, -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
+		},
+		config = function(_, opts)
+			require("markmap").setup(opts)
+		end,
 	},
 
 	{
