@@ -116,6 +116,7 @@ return {
 					path = "~/Obsidian/",
 				},
 				{ name = "Note", path = "~/Notes/" },
+				{ name = "LawBotiq", path = "/Users/chale/Project/LawBotiq" },
 			},
 
 			-- Alternatively - and for backwards compatibility - you can set 'dir' to a single path instead of
