@@ -1,4 +1,4 @@
-udo apt-get update && apt-get install sudo -y
+sudo apt-get update && apt-get install sudo -y
 sudo apt-get install git fd-find zsh bat tree ninja-build gettext cmake unzip curl tmux ripgrep python3 python3-pip python3-venv python3-dev python3-setuptools fontconfig sqlite3 libsqlite3-dev ripgrep libboost-all-dev libicu-dev npm pkg-config -y
 curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh -o install_nvm.sh
 git clone https://github.com/neovim/neovim && cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install
@@ -41,7 +41,7 @@ _fzf_comprun() {
 }
 ' >>~/.zshrc
 wget https://github.com/tree-sitter/tree-sitter/releases/download/v0.22.5/tree-sitter-linux-x64.gz
-sudo unzip tree-sitter-linux-x64.gz
+sudo gunzip tree-sitter-linux-x64.gz
 sudo mv tree-sitter-linux-x64 /usr/local/bin/tree-sitter
 sudo chmod +x /usr/local/bin/tree-sitter
 cd ~/
