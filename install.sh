@@ -51,3 +51,4 @@ sudo dpkg -i bottom_0.9.6_amd64.deb
 pip3 install --upgrade nvitop
 wget https://github.com/lsd-rs/lsd/releases/download/v1.1.2/lsd-musl_1.1.2_amd64.deb
 sudo dpkg -i lsd-musl_1.1.2_amd64.deb
+echo 'alias ls="lsd"' >>~/.zshrc
