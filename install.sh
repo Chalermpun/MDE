@@ -28,7 +28,7 @@ unzip font.zip
 fc-cache -fv
 pip3 install pynvim --upgrade
 
-echo '
+cat <<'EOF' >> ~/.zshrc
 _fzf_comprun() {
   local command=$1
   shift
@@ -39,7 +39,8 @@ _fzf_comprun() {
     *)            fzf "$@" ;;
   esac
 }
-' >>~/.zshrc
+EOF
+
 wget https://github.com/tree-sitter/tree-sitter/releases/download/v0.22.5/tree-sitter-linux-x64.gz
 sudo gunzip tree-sitter-linux-x64.gz
 sudo mv tree-sitter-linux-x64 /usr/local/bin/tree-sitter
