@@ -48,3 +48,4 @@ cd ~/
 mkdir Obsidian
 curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.6/bottom_0.9.6_amd64.deb
 sudo dpkg -i bottom_0.9.6_amd64.deb
+pip3 install --upgrade nvitop
