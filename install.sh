@@ -46,3 +46,5 @@ sudo mv tree-sitter-linux-x64 /usr/local/bin/tree-sitter
 sudo chmod +x /usr/local/bin/tree-sitter
 cd ~/
 mkdir Obsidian
+curl -LO https://github.com/ClementTsang/bottom/releases/download/0.9.6/bottom_0.9.6_amd64.deb
+sudo dpkg -i bottom_0.9.6_amd64.deb
