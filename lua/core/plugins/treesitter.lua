@@ -98,6 +98,7 @@ return {
 				"python",
 				"rst",
 				"toml",
+				"sql",
 			},
 			incremental_selection = {
 				enable = true,

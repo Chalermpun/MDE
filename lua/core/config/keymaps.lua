@@ -313,10 +313,15 @@ map("n", "<leader>zh", "<cmd>CccHighlighterToggle<cr>", { desc = "Color Toggle H
 
 -- Markdown
 map("n", "<leader>pn", '<cmd>:lua require("nabla").popup()<CR>', { desc = "Nabla Popup" })
-map("n", "<leader>os", '<cmd>ObsidianSearch<CR>', { desc = "ObsidianSearch" })
-map("n", "<leader>on", '<cmd>ObsidianNew<CR>', { desc = "ObsidianNew" })
-map("n", "<leader>ow", '<cmd>ObsidianWorkspace<CR>', { desc = "ObsidianWorkspace" })
-map("n", "<leader>oq", '<cmd>ObsidianQuickSwitch<CR>', { desc = "ObsidianQuickSwitch" })
-map("n", "<leader>ot", '<cmd>ObsidianTemplate<CR>', { desc = "ObsidianTemplate" })
-map("n", "<leader>oo", '<cmd>ObsidianOpen<CR>', { desc = "ObsidianOpen" })
+map("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "ObsidianSearch" })
+map("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "ObsidianNew" })
+map("n", "<leader>ow", "<cmd>ObsidianWorkspace<CR>", { desc = "ObsidianWorkspace" })
+map("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "ObsidianQuickSwitch" })
+map("n", "<leader>ot", "<cmd>ObsidianTemplate<CR>", { desc = "ObsidianTemplate" })
+map("n", "<leader>oo", "<cmd>ObsidianOpen<CR>", { desc = "ObsidianOpen" })
 
+-- Database
+map("n", "<leader>Du", "<Cmd>DBUIToggle<Cr>", { desc = "Toggle UI" })
+map("n", "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>", { desc = "Find buffer" })
+map("n", "<leader>Dr", "<Cmd>DBUIRenameBuffer<Cr>", { desc = "Rename buffer" })
+map("n", "<leader>Dq", "<Cmd>DBUILastQueryInfo<Cr>", { desc = "Last query info" })
