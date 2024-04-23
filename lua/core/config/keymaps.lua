@@ -181,7 +181,7 @@ map(
 
 map(
 	"n",
-	"<leader>ts",
+	"<leader>Ts",
 	[[&laststatus ? ":set laststatus=0\<cr>" : ":set laststatus=2\<cr>"]],
 	{ expr = true, silent = true, desc = "StatusLine Toggle" }
 )

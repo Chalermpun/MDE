@@ -11,14 +11,108 @@ local function get_args(config)
 end
 
 return {
-	"mfussenegger/nvim-dap",
-	event = "VeryLazy",
-	dependencies = {
+	{
+		"nvim-neotest/neotest",
+		event = "VeryLazy",
+		dependencies = {
+			"jfpedroza/neotest-elixir",
+			"nvim-neotest/neotest-python",
+			"nvim-neotest/nvim-nio",
+		},
+		keys = {
+			{
+				"<leader>ta",
+				function()
+					require("neotest").run.attach()
+				end,
+				desc = "Neotest Attach",
+			},
+			{
+				"<leader>tf",
+				function()
+					require("neotest").run.run(vim.fn.expand("%"))
+				end,
+				desc = "Neotest Run File",
+			},
+			{
+				"<leader>tF",
+				function()
+					require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
+				end,
+				desc = "Neotest Debug File",
+			},
+			{
+				"<leader>tl",
+				function()
+					require("neotest").run.run_last()
+				end,
+				desc = "Neotest Run Last",
+			},
+			{
+				"<leader>tL",
+				function()
+					require("neotest").run.run_last({ strategy = "dap" })
+				end,
+				desc = "Neotest Debug Last",
+			},
+			{
+				"<leader>tn",
+				function()
+					require("neotest").run.run()
+				end,
+				desc = "Neotest Run Nearest",
+			},
+			{
+				"<leader>tN",
+				function()
+					require("neotest").run.run({ strategy = "dap" })
+				end,
+				desc = "Neotest Debug Nearest",
+			},
+			{
+				"<leader>to",
+				function()
+					require("neotest").output.open({ enter = true })
+				end,
+				desc = "Neotest Output",
+			},
+			{
+				"<leader>tS",
+				function()
+					require("neotest").run.stop()
+				end,
+				desc = "Neotest Stop",
+			},
+			{
+				"<leader>ts",
+				function()
+					require("neotest").summary.toggle()
+				end,
+				desc = "Neotest Summary",
+			},
+			{
+				"<leader>td",
+				function()
+					require("neotest").run.run(vim.fn.expand("%:p:h"))
+				end,
+				desc = "Neotest Run Dir",
+			},
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = { require("neotest-python")({ runner = "pytest", args = { "-rA" } }) },
+			})
+		end,
+	},
+	{
+		"mfussenegger/nvim-dap",
+		event = "VeryLazy",
+		dependencies = {
 
-		"mfussenegger/nvim-dap-python",
-		-- fancy UI for the debugger
-		{
-			"rcarriga/nvim-dap-ui",
+			"mfussenegger/nvim-dap-python",
+			-- fancy UI for the debugger
+			{
+				"rcarriga/nvim-dap-ui",
       -- stylua: ignore
       keys = {
         { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
@@ -26,76 +120,55 @@ return {
         { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
         { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
       },
-			opts = {},
-			config = function(_, opts)
-				-- setup dap config by VsCode launch.json file
-				-- require("dap.ext.vscode").load_launchjs()
-				local dap = require("dap")
-				local dapui = require("dapui")
-				dapui.setup(opts)
-				dap.listeners.after.event_initialized["dapui_config"] = function()
-					dapui.open({})
-				end
-				dap.listeners.before.event_terminated["dapui_config"] = function()
-					dapui.close({})
-				end
-				dap.listeners.before.event_exited["dapui_config"] = function()
-					dapui.close({})
-				end
-				local path = require("mason-registry").get_package("debugpy"):get_install_path()
-				require("dap-python").setup(path .. "/venv/bin/python")
-			end,
-		},
+				opts = {},
+				config = function(_, opts)
+					-- setup dap config by VsCode launch.json file
+					-- require("dap.ext.vscode").load_launchjs()
+					local dap = require("dap")
+					local dapui = require("dapui")
+					dapui.setup(opts)
+					dap.listeners.after.event_initialized["dapui_config"] = function()
+						dapui.open({})
+					end
+					dap.listeners.before.event_terminated["dapui_config"] = function()
+						dapui.close({})
+					end
+					dap.listeners.before.event_exited["dapui_config"] = function()
+						dapui.close({})
+					end
+					local path = require("mason-registry").get_package("debugpy"):get_install_path()
+					require("dap-python").setup(path .. "/venv/bin/python")
+				end,
+			},
 
-		-- virtual text for the debugger
-		{
-			"theHamsta/nvim-dap-virtual-text",
-			opts = {},
-		},
+			-- virtual text for the debugger
+			{
+				"theHamsta/nvim-dap-virtual-text",
+				opts = {},
+			},
 
-		-- mason.nvim integration
-		{
-			"jay-babu/mason-nvim-dap.nvim",
-			dependencies = "mason.nvim",
-			cmd = { "DapInstall", "DapUninstall" },
-			opts = {
-				-- Makes a best effort to setup the various debuggers with
-				-- reasonable debug configurations
-				automatic_installation = true,
+			-- mason.nvim integration
+			{
+				"jay-babu/mason-nvim-dap.nvim",
+				dependencies = "mason.nvim",
+				cmd = { "DapInstall", "DapUninstall" },
+				opts = {
+					-- Makes a best effort to setup the various debuggers with
+					-- reasonable debug configurations
+					automatic_installation = true,
 
-				-- You can provide additional configuration to the handlers,
-				-- see mason-nvim-dap README for more information
-				handlers = {},
+					-- You can provide additional configuration to the handlers,
+					-- see mason-nvim-dap README for more information
+					handlers = {},
 
-				-- You'll need to check that you have the required things installed
-				-- online, please don't ask me how to install them :)
-				ensure_installed = {
-					-- Update this to ensure that you have the debuggers for the langs you want
+					-- You'll need to check that you have the required things installed
+					-- online, please don't ask me how to install them :)
+					ensure_installed = {
+						-- Update this to ensure that you have the debuggers for the langs you want
+					},
 				},
 			},
 		},
-	},
-
-	{
-		"nvim-neotest/neotest",
-		optional = true,
-		dependencies = {
-			"jfpedroza/neotest-elixir",
-			"nvim-neotest/neotest-python",
-		},
-		opts = {
-			adapters = {
-				["neotest-elixir"] = {},
-				["neotest-python"] = {
-					-- Here you can specify the settings for the adapter, i.e.
-					-- runner = "pytest",
-					-- python = ".venv/bin/python",
-				},
-			},
-		},
-	},
-
-
   -- stylua: ignore
   keys = {
     { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
@@ -117,16 +190,17 @@ return {
     { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
   },
 
-	config = function()
-		local Config = require("core.config.util")
-		vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+		config = function()
+			local Config = require("core.config.util")
+			vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
-		for name, sign in pairs(Config.defaults.icons.dap) do
-			sign = type(sign) == "table" and sign or { sign }
-			vim.fn.sign_define(
-				"Dap" .. name,
-				{ text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
-			)
-		end
-	end,
+			for name, sign in pairs(Config.defaults.icons.dap) do
+				sign = type(sign) == "table" and sign or { sign }
+				vim.fn.sign_define(
+					"Dap" .. name,
+					{ text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+				)
+			end
+		end,
+	},
 }

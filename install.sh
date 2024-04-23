@@ -53,3 +53,4 @@ pip3 install --upgrade nvitop
 wget https://github.com/lsd-rs/lsd/releases/download/v1.1.2/lsd-musl_1.1.2_amd64.deb
 sudo dpkg -i lsd-musl_1.1.2_amd64.deb
 echo 'alias ls="lsd"' >>~/.zshrc
+# https://codeium.com/vim-show-auth-token?response_type=token&redirect_uri=vim-show-auth-token&state=a&scope=openid+profile+email&redirect_parameters_type=query
