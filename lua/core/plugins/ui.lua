@@ -474,4 +474,10 @@ return {
 			require("colorizer").setup()
 		end,
 	},
+	{
+		"NStefan002/screenkey.nvim",
+		cmd = "Screenkey",
+		version = "*",
+		config = true,
+	},
 }
