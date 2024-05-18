@@ -374,6 +374,32 @@ return {
 			end, { expr = true, desc = "Codedum Complete" })
 		end,
 	},
+	{
+		"David-Kunz/gen.nvim",
+		event = "VeryLazy",
+		opts = {
+			model = "llama3:70b-instruct",
+			host = "10.204.100.72/ollama",
+			quit_map = "q",
+			retry_map = "<c-r>",
+			init = function(options)
+				pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
+			end,
+			command = function(options)
+				local body = { model = options.model, stream = true }
+				return "curl --silent --no-buffer -X POST http://" .. options.host .. "/api/chat -d $body"
+			end,
+			display_mode = "float",
+			show_prompt = false,
+			show_model = false,
+			no_auto_close = false,
+			debug = false,
+		},
+		config = function(_, opts)
+			require("gen").setup(opts)
+      vim.keymap.set({ 'n', 'v' }, '<leader>]', ':Gen<CR>', { desc = "Gen" })
+		end,
+	},
 
 	-- better yank/paste
 	{
