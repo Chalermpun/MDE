@@ -187,4 +187,14 @@ function M.foldexpr()
 	return "0"
 end
 
+function M.toggle_miniindentscope()
+	if vim.b.miniindentscope_disable then
+		vim.b.miniindentscope_disable = false
+		print("miniindentscope enabled")
+	else
+		vim.b.miniindentscope_disable = true
+		print("miniindentscope disabled")
+	end
+end
+
 return M

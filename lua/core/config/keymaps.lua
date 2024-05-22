@@ -326,3 +326,7 @@ map("n", "<leader>Du", "<Cmd>DBUIToggle<Cr>", { desc = "Toggle UI" })
 map("n", "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>", { desc = "Find buffer" })
 map("n", "<leader>Dr", "<Cmd>DBUIRenameBuffer<Cr>", { desc = "Rename buffer" })
 map("n", "<leader>Dq", "<Cmd>DBUILastQueryInfo<Cr>", { desc = "Last query info" })
+
+
+local miniindent = require("core.util.ui").toggle_miniindentscope
+map('n', '<leader>mi', miniindent, {desc = "Toggle MiniIndent Scope"})
