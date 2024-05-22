@@ -168,6 +168,7 @@ map("n", "<leader>gst", "<cmd>Gitsigns toggle_signs<cr>", { silent = true, desc 
 map("n", "<leader>gst", "<cmd>Gitsigns toggle_signs<cr>", { silent = true, desc = "GitSignToggle" })
 map("n", "<leader>Bt", "<cmd>Barbecue toggle<cr>", { desc = "Barbecue Toggle" })
 map("n", "<leader>it", "<cmd>IBLToggle<cr>", { desc = "Indent Blankline Toggle" })
+map("n", "<leader>Lt", "<cmd>ListcharsToggle<cr>", { desc = "Listchars Toggle" })
 map("n", "<leader>rt", "<cmd>ScrollbarToggle<cr>", { desc = "ScrollbarToggle" })
 map("n", "<leader>rc", "<cmd>SmoothCursorToggle<cr>", { desc = "SmoothCursorToggle" })
 map("n", "<leader>zz", "<cmd>NeoZoomToggle<cr>", { desc = "NeoZoomToggle" })

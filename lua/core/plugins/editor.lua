@@ -1317,4 +1317,7 @@ return {
 			"nvim-telescope/telescope.nvim",
 		},
 	},
+
+  -- listchars
+  { "fraso-dev/nvim-listchars", config = true }
 }
