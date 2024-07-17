@@ -1,1 +1,0 @@
-require("core.health").check()
