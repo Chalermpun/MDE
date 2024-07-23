@@ -2,8 +2,13 @@ return {
   "linux-cultist/venv-selector.nvim",
   version = false,
   dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
-  config = function()
-    require("venv-selector").setup({ stay_on_this_version = true })
+  opts = {
+    parents = 3,
+    stay_on_this_version = true,
+    name = { "env", "venv" },
+  },
+  config = function(_, opts)
+    require("venv-selector").setup(opts)
   end,
   event = "VeryLazy",
   keys = {

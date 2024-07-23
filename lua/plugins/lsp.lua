@@ -80,7 +80,7 @@ local function setup_keymaps(diagnostics_toggle)
   local telescope = require("telescope.builtin")
 
   keymap("n", "<leader>cl", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
-  keymap("n", "<leader>Lr", "<cmd>LspStart<cr>", { desc = "Lsp Info" })
+  keymap("n", "<leader>Lr", "<cmd>LspStart<cr>", { desc = "Lsp Start" })
   keymap("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
   keymap("n", "<leader>ud", diagnostics_toggle, { desc = "Toggle Diagnostics" })
   keymap("n", "gd", function()
