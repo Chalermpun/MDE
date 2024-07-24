@@ -16,5 +16,27 @@ return {
         desc = "Explorer NeoTree (cwd)",
       },
     },
+    config = function()
+      local signs = require("config.util").defaults.icons.diagnostics
+      require("neo-tree").setup({
+        enable_diagnostics = true,
+        default_component_configs = {
+          diagnostics = {
+            symbols = {
+              hint = signs.Hint,
+              info = signs.Info,
+              warn = signs.Warn,
+              error = signs.Error,
+            },
+            highlights = {
+              hint = "DiagnosticSignHint",
+              info = "DiagnosticSignInfo",
+              warn = "DiagnosticSignWarn",
+              error = "DiagnosticSignError",
+            },
+          },
+        }
+      })
+    end,
   },
 }

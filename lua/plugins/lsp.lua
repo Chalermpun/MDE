@@ -105,23 +105,6 @@ local function setup_keymaps(diagnostics_toggle)
   end, { desc = "NavBuddy" })
 end
 
-local function setup_diagnostics_signs()
-  local signs = {
-    Error = "",
-    Warn = "",
-    Hint = "󰌵",
-    Info = ""
-  }
-
-  for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
-
-  vim.diagnostic.config({
-    signs = signs
-  })
-end
 
 return {
   {
@@ -193,22 +176,35 @@ return {
           },
         },
       })
-      setup_diagnostics_signs()
       setup_navbuddy()
       setup_keymaps(setup_diagnostics())
-      local diagnostics_icons = require("config.util").defaults.icons.diagnostics
-      for name, icon in pairs(diagnostics_icons) do
-        local sign_name = "DiagnosticSign" .. name
-        vim.diagnostic.config({
-          signs = {
-            [sign_name] = {
-              text = icon,
-              texthl = sign_name,
-              numhl = "",
-            },
+      local signs = require("config.util").defaults.icons.diagnostics
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = {
+          enable = true,
+          text = {
+            ["ERROR"] = signs.Error,
+            ["WARN"] = signs.Warn,
+            ["HINT"] = signs.Hint,
+            ["INFO"] = signs.Info,
           },
-        })
-      end
+          texthl = {
+            ["ERROR"] = "DiagnosticDefault",
+            ["WARN"] = "DiagnosticDefault",
+            ["HINT"] = "DiagnosticDefault",
+            ["INFO"] = "DiagnosticDefault",
+          },
+          numhl = {
+            ["ERROR"] = "DiagnosticDefault",
+            ["WARN"] = "DiagnosticDefault",
+            ["HINT"] = "DiagnosticDefault",
+            ["INFO"] = "DiagnosticDefault",
+          },
+          severity_sort = true,
+        },
+      })
+
       if vim.lsp.inlay_hint then
         vim.keymap.set("n", "<leader>uh", function()
           vim.lsp.inlay_hint(0, nil)

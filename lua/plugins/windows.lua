@@ -6,14 +6,28 @@ return {
       Hydra({
         name = "Side scroll",
         mode = "n",
-        body = "<leader>o",
+        body = "<leader>oooooooooo",
         heads = {
           { "h", "1<C-w><" },
           { "l", "1<C-w>>" },
           { "j", "1<C-w>+" },
           { "k", "1<C-w>-" },
         },
+        config = {
+          on_enter = function()
+            vim.bo.modifiable = false
+          end,
+          on_exit = function()
+          end
+        }
       })
+      local wk = require("which-key")
+      vim.keymap.set("n", "<leader>o", function()
+        wk.show({
+          keys = "<leader>oooooooooo",
+          loop = true,
+        })
+      end, { desc = "hydra" })
     end,
   },
   {
