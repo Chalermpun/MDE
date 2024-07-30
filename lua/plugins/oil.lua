@@ -24,6 +24,13 @@ return {
           ["g."] = "actions.toggle_hidden",
           ["g\\"] = "actions.toggle_trash",
           ["q"] = "actions.close",
+          ['yp'] = {
+            desc = 'Copy filepath to system clipboard',
+            callback = function()
+              require('oil.actions').copy_entry_path.callback()
+              vim.fn.setreg("+", vim.fn.getreg(vim.v.register))
+            end,
+          },
         },
       })
       vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })

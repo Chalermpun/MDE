@@ -123,6 +123,7 @@ return {
     "SuperBo/fugit2.nvim",
     opts = {
       width = 100,
+      libgit2_path = 'libgit2.so.1.7',
     },
     dependencies = {
       "MunifTanjim/nui.nvim",

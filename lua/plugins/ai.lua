@@ -1,31 +1,5 @@
 return {
   {
-    "David-Kunz/gen.nvim",
-    event = "VeryLazy",
-    opts = {
-      model = "llama3:70b-instruct",
-      host = "10.204.100.70:11434",
-      quit_map = "q",
-      retry_map = "<c-r>",
-      init = function(options)
-        pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
-      end,
-      command = function(options)
-        local body = { model = options.model, stream = true }
-        return "curl --silent --no-buffer -X POST http://" .. options.host .. "/api/chat -d $body"
-      end,
-      display_mode = "float",
-      show_prompt = false,
-      show_model = false,
-      no_auto_close = false,
-      debug = false,
-    },
-    config = function(_, opts)
-      require("gen").setup(opts)
-      vim.keymap.set({ 'n', 'v' }, '<leader>]', ':Gen<CR>', { desc = "Gen" })
-    end,
-  },
-  {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
     config = function()
@@ -179,7 +153,7 @@ return {
           },
         },
         openai_params = {
-          model = "TechxGenus/Meta-Llama-3-70B-Instruct-AWQ",
+          model = "Qwen/Qwen2.5-72B-Instruct",
           frequency_penalty = 0,
           presence_penalty = 0,
           max_tokens = 300,
@@ -188,7 +162,7 @@ return {
           n = 1,
         },
         openai_edit_params = {
-          model = "TechxGenus/Meta-Llama-3-70B-Instruct-AWQ",
+          model = "Qwen/Qwen2.5-72B-Instruct",
           frequency_penalty = 0,
           presence_penalty = 0,
           temperature = 0,
@@ -249,4 +223,91 @@ return {
       end, { expr = true, desc = "Codedum Complete" })
     end,
   },
+  {
+    "robitx/gp.nvim",
+    config = function()
+      local conf = {
+        openai_api_key = "EMPTY",
+        providers = {
+          openai = {
+            disable = false,
+            endpoint = "http://10.204.100.79:11700/v1/chat/completions",
+          },
+        },
+        cmd_prefix = "Gp",
+        agents = {
+          {
+            provider = "openai",
+            name = "Qwen/Qwen2.5-72B-Instruct",
+            chat = true,
+            command = true,
+            model = { model = "Qwen/Qwen2.5-72B-Instruct", temperature = 1.1, top_p = 1},
+            system_prompt = require("gp.defaults").chat_system_prompt,
+          },
+          {
+            name = "CodeGPT4o",
+            disable = true,
+          },
+          {
+            name = "CodeGPT4o-mini",
+            disable = true,
+          },
+        }
+      }
+      require("gp").setup(conf)
+      local function keymapOptions(desc)
+        return {
+          noremap = true,
+          silent = true,
+          nowait = true,
+          desc = "GPT prompt " .. desc,
+        }
+      end
+
+      -- Chat commands
+      vim.keymap.set({ "n", "i" }, "<C-g>c", "<cmd>GpChatNew<cr>", keymapOptions("New Chat"))
+      vim.keymap.set({ "n", "i" }, "<C-g>t", "<cmd>GpChatToggle<cr>", keymapOptions("Toggle Chat"))
+      vim.keymap.set({ "n", "i" }, "<C-g>f", "<cmd>GpChatFinder<cr>", keymapOptions("Chat Finder"))
+
+      vim.keymap.set("v", "<C-g>c", ":<C-u>'<,'>GpChatNew<cr>", keymapOptions("Visual Chat New"))
+      vim.keymap.set("v", "<C-g>p", ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions("Visual Chat Paste"))
+      vim.keymap.set("v", "<C-g>t", ":<C-u>'<,'>GpChatToggle<cr>", keymapOptions("Visual Toggle Chat"))
+
+      vim.keymap.set({ "n", "i" }, "<C-g><C-x>", "<cmd>GpChatNew split<cr>", keymapOptions("New Chat split"))
+      vim.keymap.set({ "n", "i" }, "<C-g><C-v>", "<cmd>GpChatNew vsplit<cr>", keymapOptions("New Chat vsplit"))
+      vim.keymap.set({ "n", "i" }, "<C-g><C-t>", "<cmd>GpChatNew tabnew<cr>", keymapOptions("New Chat tabnew"))
+
+      vim.keymap.set("v", "<C-g><C-x>", ":<C-u>'<,'>GpChatNew split<cr>", keymapOptions("Visual Chat New split"))
+      vim.keymap.set("v", "<C-g><C-v>", ":<C-u>'<,'>GpChatNew vsplit<cr>", keymapOptions("Visual Chat New vsplit"))
+      vim.keymap.set("v", "<C-g><C-t>", ":<C-u>'<,'>GpChatNew tabnew<cr>", keymapOptions("Visual Chat New tabnew"))
+
+      -- Prompt commands
+      vim.keymap.set({ "n", "i" }, "<C-g>r", "<cmd>GpRewrite<cr>", keymapOptions("Inline Rewrite"))
+      vim.keymap.set({ "n", "i" }, "<C-g>a", "<cmd>GpAppend<cr>", keymapOptions("Append (after)"))
+      vim.keymap.set({ "n", "i" }, "<C-g>b", "<cmd>GpPrepend<cr>", keymapOptions("Prepend (before)"))
+
+      vim.keymap.set("v", "<C-g>r", ":<C-u>'<,'>GpRewrite<cr>", keymapOptions("Visual Rewrite"))
+      vim.keymap.set("v", "<C-g>a", ":<C-u>'<,'>GpAppend<cr>", keymapOptions("Visual Append (after)"))
+      vim.keymap.set("v", "<C-g>b", ":<C-u>'<,'>GpPrepend<cr>", keymapOptions("Visual Prepend (before)"))
+      vim.keymap.set("v", "<C-g>i", ":<C-u>'<,'>GpImplement<cr>", keymapOptions("Implement selection"))
+
+      vim.keymap.set({ "n", "i" }, "<C-g>gp", "<cmd>GpPopup<cr>", keymapOptions("Popup"))
+      vim.keymap.set({ "n", "i" }, "<C-g>ge", "<cmd>GpEnew<cr>", keymapOptions("GpEnew"))
+      vim.keymap.set({ "n", "i" }, "<C-g>gn", "<cmd>GpNew<cr>", keymapOptions("GpNew"))
+      vim.keymap.set({ "n", "i" }, "<C-g>gv", "<cmd>GpVnew<cr>", keymapOptions("GpVnew"))
+      vim.keymap.set({ "n", "i" }, "<C-g>gt", "<cmd>GpTabnew<cr>", keymapOptions("GpTabnew"))
+
+      vim.keymap.set("v", "<C-g>gp", ":<C-u>'<,'>GpPopup<cr>", keymapOptions("Visual Popup"))
+      vim.keymap.set("v", "<C-g>ge", ":<C-u>'<,'>GpEnew<cr>", keymapOptions("Visual GpEnew"))
+      vim.keymap.set("v", "<C-g>gn", ":<C-u>'<,'>GpNew<cr>", keymapOptions("Visual GpNew"))
+      vim.keymap.set("v", "<C-g>gv", ":<C-u>'<,'>GpVnew<cr>", keymapOptions("Visual GpVnew"))
+      vim.keymap.set("v", "<C-g>gt", ":<C-u>'<,'>GpTabnew<cr>", keymapOptions("Visual GpTabnew"))
+
+      vim.keymap.set({ "n", "i" }, "<C-g>x", "<cmd>GpContext<cr>", keymapOptions("Toggle Context"))
+      vim.keymap.set("v", "<C-g>x", ":<C-u>'<,'>GpContext<cr>", keymapOptions("Visual Toggle Context"))
+
+      vim.keymap.set({ "n", "i", "v", "x" }, "<C-g>s", "<cmd>GpStop<cr>", keymapOptions("Stop"))
+      vim.keymap.set({ "n", "i", "v", "x" }, "<C-g>n", "<cmd>GpNextAgent<cr>", keymapOptions("Next Agent"))
+    end
+  }
 }
